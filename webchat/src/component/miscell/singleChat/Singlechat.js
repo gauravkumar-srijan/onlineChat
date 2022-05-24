@@ -10,7 +10,7 @@ import './style.css';
 import Scrollchat from './Scrollchat';
 import io from 'socket.io-client';
   //socket-io connection
-  const ENDPOINT = "https://onlince-chat01.herokuapp.com/";
+  const ENDPOINT = "https://onlinechat098.herokuapp.com/";
   var socket,selectedChatCompare;
 
 
