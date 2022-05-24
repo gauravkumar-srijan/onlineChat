@@ -1,0 +1,33 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap');
+.App {
+
+  min-height: 100vh;
+  display:flex;
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+}
+
+
+.header_title{
+  margin: 0;
+  font-size: 5vh;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 1vh;
+  color: aliceblue;
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+  background-size: auto 200%;
+  -webkit-background-clip: text ;
+  -webkit-text-fill-color : transparent;
+  animation:  shine 4s linear infinite;
+}
+
+@keyframes shine {
+  from{
+    background-position: center 0;
+  }
+  to{
+    background-position: center 200%;
+  }
+  
+}
