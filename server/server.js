@@ -21,7 +21,7 @@ app.use('/api/message' , Messageroute);
 const dir_name = path.resolve();
 const dev = "production";
 if(dev === "production"){
-        app.use(express.static(path.join(dir_name, "../webchat/build")))
+        app.use(express.static(path.join(dir_name, "/webchat/build")))
         app.get('*' , (req,res)=>{
             res.sendFile(path.resolve(dir_name, "webchat" , "build", "index.html"))
         })
