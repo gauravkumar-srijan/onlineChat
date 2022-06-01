@@ -1,13 +1,19 @@
 const express = require('express');
 const app = express();
+const {instrument} =require('@socket.io/admin-ui');
 const connectDb = require('./config/connection');
 const cors = require('cors');
-const Port = process.env.PORT || 8000;
+// const dotenv =  require('dotenv');
+// dotenv.config();
+const Port = process.env.PORT  || 8000;
 const data_url = "mongodb://localhost:27017";
 const route  = require('./router/route');
 const Chatroute  = require('./router/chatRoute.js');
 const Messageroute  = require('./router/Messageroute.js');
 const path = require('path');
+
+
+
 
 connectDb(data_url);
 //middleware
@@ -18,27 +24,27 @@ app.use('/api/chat' , Chatroute);
 app.use('/api/message' , Messageroute);
 
 //---deployment----------------
-const dir_name = path.resolve();
+// const dir_name = path.resolve();
 
-if(process.env.NODE_ENV === 'production'){
-        app.use(express.static(path.join(dir_name, "/webchat/build")))
-        app.get('*' , (req,res)=>{
-            res.sendFile(path.resolve(dir_name, "webchat" , "build", "index.html"))
-        })
-}
-else{
-    app.get('/', (req, res)=>{
-        res.send("he! WORKS");
-    })
-}
+// if(process.env.NODE_ENV === 'production'){
 
-
+//         app.use(express.static(path.join(dir_name, "/webchat/build")))
+//         app.get('*' , (req,res)=>{
+//             res.sendFile(path.resolve(dir_name, "webchat" , "build", "index.html"))
+//         })
+// }
+// else{
+//     app.get('/', (req, res)=>{
+//         res.send("he! WORKS");
+//     })
+// }
 
 //------deployment--------
 
 const server = app.listen(Port , ()=>{
     console.log("connection worked" + Port)
 })
+
 
 const io = require('socket.io')(server,{
     pingTimeOut:60000,
@@ -64,7 +70,13 @@ io.on("connection" , (socket)=>{
         {
             return
         }
-        socket.in(user._id).emit("showmessage", Newmessage)
+        socket.to(user._id).emit("showmessage", Newmessage)
     })
    })
+   socket.off('setup',()=>{
+    console.log("User Disconnected")
+    socket.leave(userData._id)
 })
+
+})
+instrument(io,{auth:false})

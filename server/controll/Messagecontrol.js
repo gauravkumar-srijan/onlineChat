@@ -5,13 +5,14 @@ const UserModel = require('../model/user');
 class Messagecontrol{
  static sendMessage =  async(req,res)=>{
      const {content , chatId} = req.body;
+     const file = req.files
      if(!content || !chatId){
          console.log("invalid data passed")
          res.sendstatus(400);
      }
      var newMessage = {
         sender: req.user._id, 
-        content: content,
+        content: content ? content : file,
         chat: chatId,
     
      }
